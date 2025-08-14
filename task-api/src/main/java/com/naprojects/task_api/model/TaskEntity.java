@@ -32,4 +32,14 @@ public class TaskEntity {
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdDate;
+
+    @Column(nullable = false)
+    private LocalDateTime deadline;
+
+    public TaskEntity(String title, String description, UserEntity userEntity, LocalDateTime deadline) {
+        this.title = title;
+        this.description = description;
+        this.userEntity = userEntity;
+        this.deadline = deadline;
+    }
 }
