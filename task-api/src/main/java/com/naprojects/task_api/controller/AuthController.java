@@ -1,19 +1,32 @@
 package com.naprojects.task_api.controller;
 
+import com.naprojects.task_api.dto.LoginDto;
+import com.naprojects.task_api.dto.RegisterDto;
+import com.naprojects.task_api.response.ApiResponse;
+import com.naprojects.task_api.service.auth.IAuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}")
 public class AuthController {
 
-    @GetMapping()
-    public ResponseEntity<String> hello(){
-        return  ResponseEntity.ok("hello world");
+    private final IAuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse> login(@Valid @RequestBody LoginDto loginDto) {
+        ApiResponse response = authService.login(loginDto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterDto registerDto) {
+        ApiResponse response = authService.register(registerDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
