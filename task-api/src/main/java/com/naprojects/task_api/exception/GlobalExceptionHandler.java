@@ -29,6 +29,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse(ex.getMessage(),null));
     }
 
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ApiResponse> handleInvalidTokenException(InvalidTokenException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(ex.getMessage(),null));
+    }
+
+    @ExceptionHandler(ExpiredTokenException.class)
+    public ResponseEntity<ApiResponse> handleExpiredTokenException(ExpiredTokenException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(ex.getMessage(),null));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
