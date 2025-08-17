@@ -4,6 +4,7 @@ This is a fullstack application built with:
 - Frontend: ⚡ Vite + React
 - Backend: ☕ Spring Boot
 - Database: 🗃️ MysQL
+- Authentication: JWT
 
 ## 📦 Prerequisites
 Before you begin, ensure you have the following installed:
