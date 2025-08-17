@@ -18,9 +18,6 @@ public class CreateTaskDto {
     @Size(max = 500, message = "Description must be less than 500 characters")
     private String description;
 
-    @NotNull(message = "User ID is required")
-    private Long userId;
-
     @NotNull(message = "Deadline is required")
     @Future(message = "Deadline must be in the future")
     private LocalDateTime deadline;

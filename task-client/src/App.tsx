@@ -9,6 +9,8 @@ import { toastConfig } from "./configs/toastConfig";
 import AuthProvider from "./providers/AuthProvider";
 import ForgotPasswordPage from "./pages/forgot-password/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/reset-password/ResetPassword";
+import DashboardPage from "./pages/dashboard/DashboardPage";
+import DashboardLayout from "./layouts/DashLayout";
 
 function App() {
   const navigate = useNavigate();
@@ -21,7 +23,13 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPasswordPage />}
+            />
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<DashboardPage />} />
+            </Route>
           </Route>
         </Routes>
         <ToastContainer {...toastConfig} />

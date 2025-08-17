@@ -8,6 +8,7 @@ import PasswordInput from "../../components/PasswordInput";
 import { useAuthStore } from "../../stores/authStore";
 import { useUserStore } from "../../stores/userStore";
 import { loginToAccount } from "../../api/authApi";
+import { useNavigate } from "react-router-dom";
 
 interface FormValues {
   email: string;
@@ -29,7 +30,7 @@ function LoginPage() {
     password: "",
   };
 
-  //const router = useRouter();
+  const navigate = useNavigate();
 
   const user = useUserStore((state) => state.user);
 
@@ -43,7 +44,7 @@ function LoginPage() {
       useUserStore.getState().setUser(response.data.user);
       resetForm();
       toast.success(response.message);
-      //router.push("/dashboard");
+      navigate("/dashboard");
     } catch (error) {
       
 

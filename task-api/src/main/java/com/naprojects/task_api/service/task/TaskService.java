@@ -10,6 +10,7 @@ import com.naprojects.task_api.repository.TaskRepository;
 import com.naprojects.task_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +27,9 @@ public class TaskService implements ITaskService{
 
     @Override
     @Transactional
-    public TaskResponseDto createTask(CreateTaskDto createTaskDto) {
-        UserEntity user = userRepository.findById(createTaskDto.getUserId())
-                .orElseThrow(() -> new NotFoundException("User not found with id: " + createTaskDto.getUserId()));
+    public TaskResponseDto createTask(CreateTaskDto createTaskDto, UserDetails userDetails) {
+        UserEntity user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + userDetails.getUsername()));
 
         TaskEntity task = modelMapper.map(createTaskDto, TaskEntity.class);
         task.setUserEntity(user);

@@ -14,10 +14,11 @@ import {
 import { AiOutlineMenu } from "react-icons/ai";
 import { useUserStore } from "../stores/userStore";
 import { useAuthStore } from "../stores/authStore";
+import { useSideBarStore } from "../stores/dashStore";
 
 function Header() {
   const user = useUserStore((state) => state.user);
-  //const setSidebarOpen = useSideBarStore((state) => state.setSidebarOpen);
+  const setSidebarOpen = useSideBarStore((state) => state.setSidebarOpen);
   return (
     <>
       <Navbar maxWidth="full" isBordered>
@@ -27,7 +28,7 @@ function Header() {
               isIconOnly
               variant="flat"
               color="primary"
-              //onPress={() => setSidebarOpen(true)}
+              onPress={() => setSidebarOpen(true)}
             >
               <AiOutlineMenu className="w-5 h-5" />
             </Button>
