@@ -8,6 +8,14 @@ import TaskTable from "./components/TaskTable";
 import { format } from "date-fns";
 import SummaryCards from "./components/SummaryCards";
 
+export const getTimeBasedGreeting = () => {
+  const hour = new Date().getHours();
+
+  if (hour < 12) return "Good Morning";
+  if (hour < 18) return "Good Afternoon";
+  return "Good Evening";
+};
+
 function Page() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const user = useUserStore((state) => state.user);
@@ -41,7 +49,7 @@ function Page() {
     <div className="space-y-6">
       <div>
         <h1 className="font-semibold text-2xl text-gray-900">
-          Good Morning, {user?.firstName || "User"}!
+          {getTimeBasedGreeting()}, {user?.firstName || "User"}!
         </h1>
         <p className="text-gray-600">it&apos;s {dateString}</p>
       </div>
