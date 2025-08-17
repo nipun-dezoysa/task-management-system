@@ -7,13 +7,13 @@ import {
   Input,
   Button,
   Avatar,
-  Switch,
 } from "@heroui/react";
 import { FiUser, FiMail, FiSave, FiEdit2 } from "react-icons/fi";
-import { toast } from "react-toastify";
 // import { updateUser } from "@/services/userService";
 import { useUserStore } from "../../stores/userStore";
 import ChangePasswords from "./components/ChangePasswords";
+import { toast } from "react-toastify";
+import { updateUser } from "../../api/userApi";
 
 function SettingsPage() {
   const user = useUserStore((state) => state.user);
@@ -35,17 +35,17 @@ function SettingsPage() {
   };
 
   const handleSave = () => {
-    // if (user) {
-    //   updateUser(form)
-    //     .then(() => {
-    //       setUser({ id: user.id, ...form});
-    //       setEditMode(false);
-    //       toast.success("Profile updated!");
-    //     })
-    //     .catch(() => {
-    //       toast.error("Something went wrong while updating your profile.");
-    //     });
-    // }
+    if (user) {
+      updateUser(form)
+        .then(() => {
+          setUser({ id: user.id, ...form });
+          setEditMode(false);
+          toast.success("Profile updated!");
+        })
+        .catch(() => {
+          toast.error("Something went wrong while updating your profile.");
+        });
+    }
   };
 
   return (
