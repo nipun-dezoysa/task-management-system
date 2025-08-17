@@ -36,3 +36,11 @@ export const resetPassword = async (payload: {
   const response = await axiosInstance.post("/reset-password", payload);
   return response.data;
 };
+
+export const changePassword = async (payload: {
+  currentPassword: string;
+  newPassword: string;
+}) => {
+  const response = await axiosInstance.post("/change-password", payload);
+  return response.data;
+};

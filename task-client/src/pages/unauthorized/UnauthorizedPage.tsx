@@ -21,7 +21,7 @@ function Unauthorized() {
         <div className="mt-6">
           <Button
             as={Link}
-            href="/login"
+            to="/login"
             className="w-full "
             color="primary"
             startContent={<FiArrowLeft className="mr-2" />}

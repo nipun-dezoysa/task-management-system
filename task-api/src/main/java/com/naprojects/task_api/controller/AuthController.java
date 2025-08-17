@@ -1,15 +1,14 @@
 package com.naprojects.task_api.controller;
 
-import com.naprojects.task_api.dto.ForgotPasswordDto;
-import com.naprojects.task_api.dto.LoginDto;
-import com.naprojects.task_api.dto.RegisterDto;
-import com.naprojects.task_api.dto.ResetPasswordDto;
+import com.naprojects.task_api.dto.*;
 import com.naprojects.task_api.response.ApiResponse;
 import com.naprojects.task_api.service.auth.IAuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -40,6 +39,12 @@ public class AuthController {
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse> resetPassword(@Valid @RequestBody ResetPasswordDto resetPasswordDto) {
         ApiResponse response = authService.resetPassword(resetPasswordDto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<ApiResponse> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto, @AuthenticationPrincipal UserDetails userDetails) {
+        ApiResponse response = authService.changePassword(changePasswordDto, userDetails.getUsername());
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

@@ -1,9 +1,6 @@
 package com.naprojects.task_api.service.auth;
 import com.naprojects.task_api.dto.*;
-import com.naprojects.task_api.exception.AlreadyExistsException;
-import com.naprojects.task_api.exception.ExpiredTokenException;
-import com.naprojects.task_api.exception.InvalidTokenException;
-import com.naprojects.task_api.exception.NotFoundException;
+import com.naprojects.task_api.exception.*;
 import com.naprojects.task_api.model.ResetTokenEntity;
 import com.naprojects.task_api.model.UserEntity;
 import com.naprojects.task_api.repository.ResetTokenRepository;
@@ -105,6 +102,19 @@ public class AuthService implements IAuthService{
         user.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
         userRepository.save(user);
         return new ApiResponse("Password reset successfully",null);
+    }
+
+    @Override
+    public ApiResponse changePassword(ChangePasswordDto changePasswordDto, String email) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
+
+        if(!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())){
+            throw new UnauthorizedException("Current password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(changePasswordDto.getNewPassword()));
+        userRepository.save(user);
+        return new ApiResponse("Password updated successfully", null);
     }
 
     @Override

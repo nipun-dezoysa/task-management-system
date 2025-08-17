@@ -33,7 +33,7 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final AuthEntryPointJwt authEntryPoint;
 
-    private static final List<String> SECURED_URLS = List.of("/api/tasks/**","/api/user/**");
+    private static final List<String> SECURED_URLS = List.of("/api/tasks/**","/api/user/**","/api/change-password");
 
     @Bean
     public ModelMapper modelMapper(){
