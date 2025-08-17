@@ -57,14 +57,14 @@ export default function DashboardSidebar() {
       <aside
         className={`
           fixed lg:static inset-y-0 left-0 max-lg:z-50
-          w-64 bg-white shadow-lg
+          w-64 bg-white
           transform transition-transform duration-300 ease-in-out
           ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           }
         `}
       >
-        <Card className="h-full rounded-none shadow-none">
+        <Card shadow="none" className="h-full rounded-none shadow-none">
           <CardBody className="p-0">
             {/* Header */}
             <div className="p-6">
