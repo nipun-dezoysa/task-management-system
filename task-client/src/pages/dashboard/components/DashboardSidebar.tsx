@@ -137,6 +137,12 @@ export default function DashboardSidebar() {
                 <Button
                   as={Link}
                   to="/dashboard/settings"
+                  onClick={() => {
+                    // Close sidebar on mobile when item is clicked
+                    if (window.innerWidth < 1024) {
+                      onClose();
+                    }
+                  }}
                   variant="light"
                   className={`
                         w-full justify-start h-12 px-4
