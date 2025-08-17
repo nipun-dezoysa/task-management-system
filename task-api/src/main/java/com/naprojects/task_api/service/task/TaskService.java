@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +44,13 @@ public class TaskService implements ITaskService{
     @Override
     public List<TaskResponseDto> getCurrentUserTasks(String email) {
         return taskRepository.findByUserEntityEmail(email).stream()
+                .map(task -> modelMapper.map(task, TaskResponseDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskResponseDto> getCurrentUserTodayTasks(String email) {
+        return taskRepository.findTodayTasksByUserEmail(email).stream()
                 .map(task -> modelMapper.map(task, TaskResponseDto.class))
                 .collect(Collectors.toList());
     }

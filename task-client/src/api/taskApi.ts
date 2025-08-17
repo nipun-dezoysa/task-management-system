@@ -16,6 +16,11 @@ export const getUserCreatedTasks = async () => {
   return response.data;
 };
 
+export const getUserTodayTasks = async () => {
+  const response = await axiosInstance.get("/tasks/today");
+  return response.data;
+};
+
 export const updateTask = async (id: number, payload: {
     title: string;
     description: string;

@@ -12,6 +12,7 @@ import ResetPasswordPage from "./pages/reset-password/ResetPassword";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import DashboardLayout from "./layouts/DashLayout";
 import AllTasksPage from "./pages/dashboard/AllTasksPage";
+import SettingsPage from "./pages/dashboard/SettingsPage";
 
 function App() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function App() {
             <Route path="/dashboard/" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
               <Route path="all-tasks" element={<AllTasksPage />} />
+              <Route path="settings" element={<SettingsPage />} />
             </Route>
           </Route>
         </Routes>

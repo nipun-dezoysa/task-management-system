@@ -10,6 +10,7 @@ import java.util.List;
 public interface ITaskService {
     TaskResponseDto createTask(CreateTaskDto createTaskDto, UserDetails userDetails);
     List<TaskResponseDto> getCurrentUserTasks(String email);
+    List<TaskResponseDto> getCurrentUserTodayTasks(String email);
     TaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto, String email);
     void deleteTask(Long id,String email);
 }

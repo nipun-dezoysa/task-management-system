@@ -34,6 +34,12 @@ public class TaskController {
         return ResponseEntity.ok(new ApiResponse("User Tasks",tasks));
     }
 
+    @GetMapping("/today")
+    public ResponseEntity<ApiResponse> getCurrentUserTodayTasks(@AuthenticationPrincipal UserDetails userDetails) {
+        List<TaskResponseDto> tasks = taskService.getCurrentUserTodayTasks(userDetails.getUsername());
+        return ResponseEntity.ok(new ApiResponse("User Tasks",tasks));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateTask(
             @PathVariable Long id,
