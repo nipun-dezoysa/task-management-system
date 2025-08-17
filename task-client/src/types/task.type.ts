@@ -1,4 +1,5 @@
 import type { CalendarDateTime } from "@internationalized/date";
+import type { IconType } from "react-icons";
 
 export type TaskStatusType = "PENDING" | "IN_PROGRESS" | "COMPLETED";
 
@@ -19,3 +20,11 @@ export type Task = {
   deadline: string;
 };
 
+export interface SummaryCard {
+  title: string;
+  value: number;
+  icon: IconType;
+  color: string;
+  textColor: string;
+  bgColor: string;
+}

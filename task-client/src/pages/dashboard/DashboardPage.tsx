@@ -6,6 +6,7 @@ import { useUserStore } from "../../stores/userStore";
 import { getUserTodayTasks } from "../../api/taskApi";
 import TaskTable from "./components/TaskTable";
 import { format } from "date-fns";
+import SummaryCards from "./components/SummaryCards";
 
 function Page() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
@@ -44,6 +45,7 @@ function Page() {
         </h1>
         <p className="text-gray-600">it&apos;s {dateString}</p>
       </div>
+      <SummaryCards />
       <TaskTable
         title="Today Tasks"
         allTasks={allTasks}

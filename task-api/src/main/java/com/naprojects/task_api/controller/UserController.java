@@ -2,6 +2,7 @@ package com.naprojects.task_api.controller;
 
 import com.naprojects.task_api.dto.UpdateUserDto;
 import com.naprojects.task_api.dto.UserResponseDto;
+import com.naprojects.task_api.dto.UserSummaryDto;
 import com.naprojects.task_api.response.ApiResponse;
 import com.naprojects.task_api.service.user.IUserService;
 import jakarta.validation.Valid;
@@ -21,6 +22,12 @@ public class UserController {
     ResponseEntity<ApiResponse> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails){
         UserResponseDto user = userService.getCurrentUser(userDetails);
         return ResponseEntity.ok(new ApiResponse("current user.",user));
+    }
+
+    @GetMapping("/summary")
+    ResponseEntity<ApiResponse> getUserSummary(@AuthenticationPrincipal UserDetails userDetails){
+        UserSummaryDto user = userService.getUserSummary(userDetails.getUsername());
+        return ResponseEntity.ok(new ApiResponse("cuser summary.",user));
     }
 
     @PutMapping

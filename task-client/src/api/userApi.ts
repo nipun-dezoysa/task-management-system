@@ -4,6 +4,10 @@ export const getUserDetails = async () => {
   return axiosInstance.get("/user");
 };
 
+export const getUserSummary = async () => {
+  return axiosInstance.get("/user/summary");
+};
+
 export const updateUser = async (data: {
   firstName: string;
   lastName: string;
