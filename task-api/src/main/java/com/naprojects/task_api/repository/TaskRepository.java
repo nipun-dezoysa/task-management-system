@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TaskRepository extends JpaRepository<TaskEntity,Long> {
-    List<TaskEntity> findByUserEntityId(Long userId);
+    List<TaskEntity> findByUserEntityEmail(String email);
     List<TaskEntity> findByUserEntityIdAndStatus(Long userId, TaskStatus status);
     List<TaskEntity> findByDeadlineBetweenAndStatusNot(
             LocalDateTime start,

@@ -28,23 +28,24 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiResponse("Task successfully created.",createdTask));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse> getTasksByUserId(@PathVariable Long userId) {
-        List<TaskResponseDto> tasks = taskService.getTasksByUserId(userId);
+    @GetMapping
+    public ResponseEntity<ApiResponse> getCurrentUserTasks(@AuthenticationPrincipal UserDetails userDetails) {
+        List<TaskResponseDto> tasks = taskService.getCurrentUserTasks(userDetails.getUsername());
         return ResponseEntity.ok(new ApiResponse("User Tasks",tasks));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateTask(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateTaskDto updateTaskDto) {
-        TaskResponseDto updatedTask = taskService.updateTask(id, updateTaskDto);
+            @Valid @RequestBody UpdateTaskDto updateTaskDto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        TaskResponseDto updatedTask = taskService.updateTask(id, updateTaskDto,userDetails.getUsername());
         return ResponseEntity.ok(new ApiResponse("Task updated.",updatedTask));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
+    public ResponseEntity<ApiResponse> deleteTask(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        taskService.deleteTask(id,userDetails.getUsername());
         return ResponseEntity.ok(new ApiResponse("Task deleted.",null));
     }
 }

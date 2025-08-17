@@ -4,6 +4,7 @@ import com.naprojects.task_api.dto.CreateTaskDto;
 import com.naprojects.task_api.dto.TaskResponseDto;
 import com.naprojects.task_api.dto.UpdateTaskDto;
 import com.naprojects.task_api.exception.NotFoundException;
+import com.naprojects.task_api.exception.UnauthorizedException;
 import com.naprojects.task_api.model.TaskEntity;
 import com.naprojects.task_api.model.UserEntity;
 import com.naprojects.task_api.repository.TaskRepository;
@@ -40,17 +41,21 @@ public class TaskService implements ITaskService{
     }
 
     @Override
-    public List<TaskResponseDto> getTasksByUserId(Long userId) {
-        return taskRepository.findByUserEntityId(userId).stream()
+    public List<TaskResponseDto> getCurrentUserTasks(String email) {
+        return taskRepository.findByUserEntityEmail(email).stream()
                 .map(task -> modelMapper.map(task, TaskResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public TaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto) {
+    public TaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto,String email) {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
+
+        if(task.getUserEntity().getEmail().equals(email)){
+            throw new UnauthorizedException("User has no permissions to modify this Task");
+        }
 
         if (updateTaskDto.getTitle() != null) {
             task.setTitle(updateTaskDto.getTitle());
@@ -71,9 +76,11 @@ public class TaskService implements ITaskService{
 
     @Override
     @Transactional
-    public void deleteTask(Long id) {
-        if (!taskRepository.existsById(id)) {
-            throw new NotFoundException("Task not found with id: " + id);
+    public void deleteTask(Long id, String email) {
+        TaskEntity task = taskRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
+        if(task.getUserEntity().getEmail().equals(email)){
+            throw new UnauthorizedException("User has no permissions to modify this Task");
         }
         taskRepository.deleteById(id);
     }

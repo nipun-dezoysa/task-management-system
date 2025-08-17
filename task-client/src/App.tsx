@@ -11,6 +11,7 @@ import ForgotPasswordPage from "./pages/forgot-password/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/reset-password/ResetPassword";
 import DashboardPage from "./pages/dashboard/DashboardPage";
 import DashboardLayout from "./layouts/DashLayout";
+import AllTasksPage from "./pages/dashboard/AllTasksPage";
 
 function App() {
   const navigate = useNavigate();
@@ -27,8 +28,9 @@ function App() {
               path="/reset-password/:token"
               element={<ResetPasswordPage />}
             />
-            <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="/dashboard/" element={<DashboardLayout />}>
               <Route index element={<DashboardPage />} />
+              <Route path="all-tasks" element={<AllTasksPage />} />
             </Route>
           </Route>
         </Routes>

@@ -28,7 +28,7 @@ const iconMap = {
 };
 
 export default function DashboardSidebar() {
-  const pathname = useLocation();
+  const location = useLocation();
   const { isOpen: isDisclosureOpen, onOpen, onOpenChange } = useDisclosure();
   const sidebarOpen = useSideBarStore((state) => state.sidebarOpen);
   const setSidebarOpen = useSideBarStore((state) => state.setSidebarOpen);
@@ -39,8 +39,7 @@ export default function DashboardSidebar() {
 
   const commonMenuItems = [
     { href: "/dashboard", label: "Overview", icon: "Home" },
-    { href: "/dashboard/my-tasks", label: "My Tasks", icon: "CheckSquare" },
-    { href: "/dashboard/created", label: "Created Tasks", icon: "Plus" },
+    { href: "/dashboard/all-tasks", label: "All Tasks", icon: "CheckSquare" },
   ];
 
 
@@ -105,7 +104,7 @@ export default function DashboardSidebar() {
                     <Button
                       key={item.href}
                       as={Link}
-                      href={item.href}
+                      to={item.href}
                       variant={isActive ? "flat" : "light"}
                       color={isActive ? "primary" : "default"}
                       className={`
@@ -137,7 +136,7 @@ export default function DashboardSidebar() {
               <div className="space-y-2">
                 <Button
                   as={Link}
-                  href="/dashboard/settings"
+                  to="/dashboard/settings"
                   variant="light"
                   className="w-full justify-start h-10 px-4 text-gray-600"
                   startContent={<AiOutlineSetting className="w-4 h-4" />}

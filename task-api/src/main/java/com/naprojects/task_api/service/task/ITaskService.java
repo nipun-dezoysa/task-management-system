@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ITaskService {
     TaskResponseDto createTask(CreateTaskDto createTaskDto, UserDetails userDetails);
-    List<TaskResponseDto> getTasksByUserId(Long userId);
-    TaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto);
-    void deleteTask(Long id);
+    List<TaskResponseDto> getCurrentUserTasks(String email);
+    TaskResponseDto updateTask(Long id, UpdateTaskDto updateTaskDto, String email);
+    void deleteTask(Long id,String email);
 }

@@ -17,7 +17,6 @@ import * as Yup from "yup";
 import {
   now,
   getLocalTimeZone,
-  parseDate,
 } from "@internationalized/date";
 import { toast } from "react-toastify";
 import type { TaskRequestType, TaskStatusType } from "../../../types/task.type";
