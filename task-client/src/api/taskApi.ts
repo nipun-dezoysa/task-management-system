@@ -16,6 +16,16 @@ export const getUserCreatedTasks = async () => {
   return response.data;
 };
 
+export const updateTask = async (id: number, payload: {
+    title: string;
+    description: string;
+    deadline: string | null;
+    status: TaskStatusType;
+}) => {
+    const response = await axiosInstance.put(`/tasks/${id}`, payload);
+    return response.data;
+};
+
 export const deleteTask = async (id: number) => {
   const response = await axiosInstance.delete(`/tasks/${id}`);
   return response.data;

@@ -43,10 +43,12 @@ function TaskTable({
   title,
   allTasks,
   onDelete,
+  onEdit,
 }: {
   title: string;
   allTasks: Task[];
   onDelete: (taskId: number) => void;
+  onEdit: (values: Task) => void;
 }) {
   const [sortField, setSortField] = useState<SortField>("created");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
@@ -158,12 +160,14 @@ function TaskTable({
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           task={selectedTask}
-          onDelete={()=>{
+          onDelete={() => {
             onDelete(selectedTask.id);
             setSelectedTask(null);
           }}
-          onEdit={() => {}}
-          onStatusChange={(a: string) => {}}
+          onEdit={(task: Task) => {
+            onEdit(task);
+            setSelectedTask(task);
+          }}
         />
       )}
     </div>

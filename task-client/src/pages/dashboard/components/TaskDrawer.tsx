@@ -3,16 +3,15 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  Select,
-  SelectItem,
   Button,
   Divider,
   useDisclosure,
 } from "@heroui/react";
 import { FiEdit2, FiTrash2, FiCalendar, FiClock, FiInfo } from "react-icons/fi";
-import type { Task } from "../../../types/task.type";
+import type { Task, TaskRequestType } from "../../../types/task.type";
 import { format } from "date-fns";
 import DeleteConfirmation from "./DeleteConfirmation";
+import UpdateTaskModal from "./UpdateTaskModal";
 
 function TaskDrawer({
   isOpen,
@@ -20,19 +19,22 @@ function TaskDrawer({
   task,
   onDelete,
   onEdit,
-  onStatusChange,
 }: {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   task: Task;
   onDelete: () => void;
-  onEdit: () => void;
-  onStatusChange: (status: string) => void;
+  onEdit: (values: Task) => void;
 }) {
   const {
     isOpen: isConfirmOpen,
     onOpen: onConfirmOpen,
     onOpenChange: onConfirmOpenChange,
+  } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onOpenChange: onEditOpenChange,
   } = useDisclosure();
   return (
     <>
@@ -47,7 +49,7 @@ function TaskDrawer({
                     <Button
                       isIconOnly
                       variant="light"
-                      onPress={onEdit}
+                      onPress={onEditOpenChange}
                       aria-label="Edit task"
                     >
                       <FiEdit2 className="text-gray-600" />
@@ -74,18 +76,6 @@ function TaskDrawer({
                     <p className="text-gray-700">{task.description}</p>
                   </div>
                 )}
-
-                <Select
-                  selectedKeys={[task.status]}
-                  onChange={(e) => onStatusChange(e.target.value)}
-                  label="Update Status"
-                  variant="bordered"
-                  className="w-full"
-                >
-                  <SelectItem key="PENDING">PENDING</SelectItem>
-                  <SelectItem key="IN_PROGRESS">IN PROGRESS</SelectItem>
-                  <SelectItem key="COMPLETED">COMPLETED</SelectItem>
-                </Select>
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-3">
@@ -117,7 +107,11 @@ function TaskDrawer({
                   >
                     Close
                   </Button>
-                  <Button color="primary" onPress={onEdit} className="flex-1">
+                  <Button
+                    color="primary"
+                    onPress={onEditOpenChange}
+                    className="flex-1"
+                  >
                     Edit Task
                   </Button>
                 </div>
@@ -137,6 +131,12 @@ function TaskDrawer({
           )}
         </DrawerContent>
       </Drawer>
+      <UpdateTaskModal
+        isOpen={isEditOpen}
+        onOpenChange={onEditOpenChange}
+        task={task}
+        onEdit={onEdit}
+      />
     </>
   );
 }

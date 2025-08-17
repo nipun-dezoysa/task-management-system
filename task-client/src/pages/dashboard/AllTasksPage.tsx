@@ -33,7 +33,7 @@ function Page() {
     }
   }, [user]);
 
-  return <TaskTable title="Created Tasks" allTasks={allTasks} onDelete={deleteTaskFromList} />;
+  return <TaskTable title="Created Tasks" allTasks={allTasks} onDelete={deleteTaskFromList} onEdit={updateTaskInList} />;
 }
 
 export default Page;

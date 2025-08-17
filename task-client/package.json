@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@heroui/react": "^2.8.2",
+    "@internationalized/date": "^3.8.2",
     "@tailwindcss/vite": "^4.1.12",
     "axios": "^1.11.0",
     "date-fns": "^4.1.0",
