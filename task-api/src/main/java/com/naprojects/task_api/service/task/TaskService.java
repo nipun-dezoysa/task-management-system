@@ -61,7 +61,7 @@ public class TaskService implements ITaskService{
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
 
-        if(task.getUserEntity().getEmail().equals(email)){
+        if(!task.getUserEntity().getEmail().equals(email)){
             throw new UnauthorizedException("User has no permissions to modify this Task");
         }
 
@@ -87,7 +87,7 @@ public class TaskService implements ITaskService{
     public void deleteTask(Long id, String email) {
         TaskEntity task = taskRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
-        if(task.getUserEntity().getEmail().equals(email)){
+        if(!task.getUserEntity().getEmail().equals(email)){
             throw new UnauthorizedException("User has no permissions to modify this Task");
         }
         taskRepository.deleteById(id);
