@@ -7,6 +7,8 @@ import com.naprojects.task_api.repository.ResetTokenRepository;
 import com.naprojects.task_api.repository.UserRepository;
 import com.naprojects.task_api.response.ApiResponse;
 import com.naprojects.task_api.security.jwt.JwtUtils;
+import com.naprojects.task_api.service.email.EmailService;
+import com.naprojects.task_api.service.email.IEmailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +33,8 @@ public class AuthService implements IAuthService{
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final ResetTokenRepository resetTokenRepository;
-    private final JavaMailSender mailSender;
     private final ModelMapper modelMapper;
+    private final IEmailService emailService;
 
     @Override
     public ApiResponse register(RegisterDto registerDto) {
@@ -84,7 +86,7 @@ public class AuthService implements IAuthService{
         }
         ResetTokenEntity token = new ResetTokenEntity(reset,user);
         resetTokenRepository.save(token);
-        sendPasswordResetEmail(user.getEmail(), reset);
+        emailService.sendPasswordResetEmail(user.getEmail(), reset);
         return new ApiResponse("token generated",null);
     }
 
@@ -125,14 +127,5 @@ public class AuthService implements IAuthService{
             throw new ExpiredTokenException("token is expired");
         }
         return new ApiResponse("reset token",token.getUser().getEmail());
-    }
-
-    private void sendPasswordResetEmail(String email, String token) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Password Reset Request");
-        message.setText("To reset your password, click the link below:\n\n"
-                + "http://localhost:5173/" + token);
-        mailSender.send(message);
     }
 }
