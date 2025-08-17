@@ -43,4 +43,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/reset-token/{id}")
+    public ResponseEntity<ApiResponse> getResetTokenDetails(@PathVariable("id") String token) {
+        ApiResponse response = authService.getTokenDetails(token);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

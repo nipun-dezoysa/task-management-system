@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ExpiredTokenException.class)
     public ResponseEntity<ApiResponse> handleExpiredTokenException(ExpiredTokenException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(ex.getMessage(),null));
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ApiResponse(ex.getMessage(),null));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

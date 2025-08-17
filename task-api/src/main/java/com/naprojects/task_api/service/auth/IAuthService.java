@@ -11,4 +11,5 @@ public interface IAuthService {
     ApiResponse login(LoginDto loginDto);
     ApiResponse forgotPassword(ForgotPasswordDto forgotPasswordDto);
     ApiResponse resetPassword(ResetPasswordDto resetPasswordDto);
+    ApiResponse getTokenDetails(String resetToken);
 }

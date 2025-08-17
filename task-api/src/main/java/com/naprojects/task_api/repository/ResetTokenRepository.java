@@ -12,4 +12,5 @@ public interface ResetTokenRepository extends JpaRepository<ResetTokenEntity, Lo
     boolean existsByUser(UserEntity user);
     void deleteByUser(UserEntity user);
     Optional<ResetTokenEntity> findByUserAndToken(UserEntity user,String token);
+    Optional<ResetTokenEntity> findByToken(String token);
 }
