@@ -5,10 +5,13 @@ import type { Task } from "../../types/task.type";
 import { useUserStore } from "../../stores/userStore";
 import { getUserTodayTasks } from "../../api/taskApi";
 import TaskTable from "./components/TaskTable";
+import { format } from "date-fns";
 
 function Page() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const user = useUserStore((state) => state.user);
+  const dateString = format(new Date(), "EEEE, d MMMM yyyy");
+
   //const { onOpen } = useDrawerStore();
 
   const updateTaskInList = useCallback((updatedTask: Task) => {
@@ -34,12 +37,20 @@ function Page() {
   }, [user]);
 
   return (
-    <TaskTable
-      title="Today Tasks"
-      allTasks={allTasks}
-      onDelete={deleteTaskFromList}
-      onEdit={updateTaskInList}
-    />
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-semibold text-2xl text-gray-900">
+          Good Morning, {user?.firstName || "User"}!
+        </h1>
+        <p className="text-gray-600">it&apos;s {dateString}</p>
+      </div>
+      <TaskTable
+        title="Today Tasks"
+        allTasks={allTasks}
+        onDelete={deleteTaskFromList}
+        onEdit={updateTaskInList}
+      />
+    </div>
   );
 }
 
