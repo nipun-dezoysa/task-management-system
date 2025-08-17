@@ -138,7 +138,14 @@ export default function DashboardSidebar() {
                   as={Link}
                   to="/dashboard/settings"
                   variant="light"
-                  className="w-full justify-start h-10 px-4 text-gray-600"
+                  className={`
+                        w-full justify-start h-12 px-4
+                        ${
+                          location.pathname === "/dashboard/settings"
+                            ? "bg-primary-50 border-r-3 border-primary"
+                            : "hover:bg-gray-100"
+                        }
+                      `}
                   startContent={<AiOutlineSetting className="w-4 h-4" />}
                 >
                   Settings
